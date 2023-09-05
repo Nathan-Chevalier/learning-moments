@@ -8,7 +8,9 @@ export const AllPosts = () => {
   const [topics, setTopics] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [showTopic, setShowTopic] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  // ? Sets initial post & topic arrays
   useEffect(() => {
     getAllPosts().then((postArray) => {
       setPosts(postArray);
@@ -18,6 +20,7 @@ export const AllPosts = () => {
     });
   }, []);
 
+  // ? Filters posts by topic selector
   useEffect(() => {
     if (showTopic > 0) {
       const postFilter = posts.filter(
@@ -28,6 +31,14 @@ export const AllPosts = () => {
       setFilteredPosts(posts);
     }
   }, [posts, showTopic]);
+
+  // ? Searches posts & filters results
+  useEffect(() => {
+    const foundPosts = posts.filter((post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPosts(foundPosts);
+  }, [posts, searchTerm]);
 
   return (
     <>
@@ -48,6 +59,16 @@ export const AllPosts = () => {
                 return <option value={topic.id}>{topic.name}</option>;
               })}
             </select>
+          </div>
+          <div>
+            <input
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+              }}
+              type="text"
+              placeholder="Search Posts..."
+              className="post-search"
+            />
           </div>
         </div>
         <ul>
