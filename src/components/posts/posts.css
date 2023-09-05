@@ -1,0 +1,10 @@
+.post-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.post-list > div {
+  margin: 0.4rem 0rem 0.4rem 0rem;
+  padding: 0.4rem 0rem 0.4rem 0rem;
+}
